@@ -1,0 +1,170 @@
+---
+title: Base de Datos SQL vs Base de Datos No SQL
+description: En el presente capítulo aprenderemos cual es la diferencia entre una base de datos SQL y una base de datos No-SQL.
+date: '2023-04-09'
+authors:
+  - edwin
+---
+
+El uso de bases de datos relacionales está muy extendido,
+siendo el sistema más utilizado en el software profesional,
+educativo y comercial. Sin embargo, las bases de datos no
+relacionales están empezando a ser tenidas en cuenta por
+muchas de sus ventajas que se adaptan a las exigencias
+de la metodología _DevOps_ de entrega rápida y continuada
+de servicios.
+
+A continuación, hablaremos de **SQL vs. NoSQL**,
+es decir, de qué es una base de datos SQL y No SQL,
+cuáles son sus ventajas, en qué se diferencian, y cuándo
+es conveniente utilizar una u otra.
+
+## ¿Qué es una base de datos SQL?
+
+Una base de datos SQL es una base de datos **relacional**
+escrita en el **lenguaje de consulta estructurado** 
+SQL(_Structured Query Language_). Una base de datos
+relacional es aquella que dispone de una relación
+predefinida entre sus elementos, donde cada registro
+pueda ser identificado de forma inequívoca.
+
+### Ventajas de SQL
+
+Las bases de datos SQL disponen de una serie de ventajas
+que las han convertido en el tipo de base de datos más
+utilizada. Las principales ventajas son:
+
+- Dispone de herramientas que permiten **evitar la duplicidad**
+  de registros, garantizando la **integridad referencial** (
+  al eliminarse un registro, se eliminan todos los registros
+  relacionados dependientes del mismo).
+- Tienen un **mayor soporte** al llevar mucho tiempo en el
+  mercado (mayor comunidad, aplicaciones y complementos).
+- **Atomicidad de la información.** al llevar mucho tiempo
+  en el mercado (mayor comunidad, aplicaciones y complementos).
+- Dispone de un **sistema estándar** bien definido (SQL)
+  para las operaciones con la base de datos, como inserción,
+  actualización o consultas. Este sistema es **sencillo de
+  comprender** ya que se adapta al lenguaje común.
+
+## ¿Qué es una base de datos NoSQL?
+
+Una base de datos NoSQL o _Not Only SQL_ es una base de datos
+**no relacional** que no cuenta con un identificador que
+relacione un conjunto de datos con otro. En las bases de
+datos No SQL la información es organizada generalmente como
+documentos y no requieren que los datos están estructurados
+para poder manipularlos.
+
+### Ventajas de NoSQL
+
+Las principales ventajas de las bases de datos no
+relacionales NoSQL son:
+
+- Son bases de datos **versátiles** que permiten agregar
+  información o hacer cambios en el sistema sin necesidad de
+  agregar configuraciones extras.
+- Las bases de datos NoSQL **open source** no requieren del
+  pago de licencia y no necesitan un hardware muy potente para
+  poder ser ejecutadas.
+- Soportan el **crecimiento horizontal**, es decir, al soportar
+  estructuras distribuidas se pueden instalar nuevos nodos
+  operativos que balancean la carga de trabajo. Es más fácil
+  su expansión debido a este escalado horizontal.
+- Permiten guardar **datos de cualquier tipo**, en cualquier
+  momento, sin requerir una verificación.
+- Realizan consultas utilizando **JSON** (_JavaScript Object
+  Notation_, formato sencillo de intercambio de texto).
+
+## Diferencias entre SQL y NOSQL
+
+Entre sus diferencias principales, **las bases de datos SQL
+combinan de forma eficiente diferentes tablas para extraer
+información relacionadas y las NoSQL no lo permiten**
+o son muy limitadas. Por otro lado, las NoSQL dejan distribuir
+cantidades elevadas de información mientras que las SQL facilitan
+distribuir bases de datos relacionales.
+Existen muchas diferencias entre estos dos tipos de bases de datos.
+Veamos las mismas teniendo en cuenta distintos factores:
+
+- **Rendimiento:** Las bases de datos NoSQL ofrecen un mayor
+  rendimiento que las SQL (necesitan menos recursos de hardware).
+- **Fiabilidad:** Las bases de datos relacionales SQL son más
+  fiables que las NoSQL (si un proceso tiene algún error, no se
+  lleva a cabo).
+- **Disponibilidad:** En cuanto a la disponibilidad, ambas
+  alternativas son igual de válidas.
+- **Consistencia:** La consistencia de las bases de datos NoSQL
+  es pobre, en cambio las SQL son bases de datos muy consistentes
+  (la consistencia es la capacidad de garantizar la integridad de
+  los datos).
+- **Almacenamiento:** Las bases de datos SQL son indicadas cuando
+  la cantidad de datos no son extremadamente grandes, mientras que
+  las NoSQl son ideales para manejar grandes volúmenes de datos.
+- **Escalabilidad:** Las bases de datos NoSQL son escalables por
+  lo que se pueden aumentar su capacidad fácilmente, sin embargo,
+  las SQL pueden ser escalables, pero con un costo económico más
+  elevado. Las bases de datos No SQL utilizan un escalado horizontal
+  (aumentar el número de servidores) mientras que las SQL utilizan un
+  escalado vertical (aumentar los recursos de un servidor).
+
+## Cuando utilizar SQL o NOSQL
+
+Elegir el tipo de base de datos a utilizar en un
+proyecto es importante ya que influye en el rendimiento
+y en desarrollo del mismo. Decantarse por una base de datos
+relacional o no relacional puede hacer que un proyecto se
+encuentre con problemas que impidan su correcta ejecución,
+añadan mucho esfuerzo o incluso aumente los costos previstos.
+
+### En qué casos utilizar SQL
+
+Cuando en un proyecto **el volumen de los datos no tendrá
+un gran crecimiento**, o este se realice de forma lenta, las
+bases de datos SQL.
+
+En proyectos donde el **pico de usuarios que accedan a la
+base de datos esté previsto** las bases de datos relacionales
+funcionan de manera óptima.
+
+### En qué casos utilizar NoSQL
+
+Si el **crecimiento de la base de datos se realiza de forma
+rápida** con grandes aumentos en poco tiempo, lo ideal es
+recurrir a bases de datos no relacionales NoSQL.
+
+Si el acceso a la base de datos puede sufrir **picos altos
+y en múltiples ocasiones**, lo mejor es optar por No SQL.
+
+Si las necesidades de procesamiento no se pueden prevenir,
+es mejor utilizar bases de datos NoSQL escalables (permiten
+expandirse).
+
+## NoSQL simplifica la base de datos DevOps
+
+La utilización de una base de datos documental NoSQL simplifica
+la base de datos DevOps ya que aporta una **flexibilidad de
+esquemas**, permitiendo que los desarrolladores accedan a una
+base de datos estructurados, semi estructurados y no
+estructurados, dinámica (con cambios constantes). Los
+desarrolladores pueden operar directamente sobre los datos
+con JSON obteniendo resultados inmediatos.
+
+La aplicación desarrollada **no depende de un ORM** (_Object
+Relational Mapping_, técnica de programación que permite
+convertir datos entre el sistema de tipos utilizado en un
+lenguaje de programación orientado a objetos y la utilización
+de una base de datos relacional como motor de persistencia)
+y solo requiere una actualización del código de la aplicación
+ante cualquier cambio del esquema de la base de datos.
+
+La **escalabilidad horizontal** permite ampliar la capacidad
+de la base de datos si se requiere en muy poco tiempo. Esta
+escalabilidad coincide con uno de los objetivos DevOps, de
+adaptarse de forma inmediata a las necesidades de los proyectos.
+
+Las bases de datos no relacionales NoSQL son una gran alternativa
+a las relacionales SQL para muchos proyectos. Dentro del marco
+DevOps el uso de una base de datos documental NoSQL aporta
+rapidez, escalabilidad, flexibilidad y sencillez a la gestión
+la misma.
