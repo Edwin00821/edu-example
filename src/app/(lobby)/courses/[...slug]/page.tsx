@@ -93,6 +93,7 @@ export async function generateStaticParams(): Promise<
 
 export default async function CoursePage({ params }: CoursePageProps) {
   const course = await getCourseFromParams(params)
+  console.log(params)
 
   if (!course) {
     notFound()
@@ -106,10 +107,13 @@ export default async function CoursePage({ params }: CoursePageProps) {
     slug: course.slug.replace(/^\/courses/, ''),
   }
 
-  const formattedPages = allCourses.map((course) => ({
-    ...course,
-    slug: course.slug.replace(/^\/courses/, ''),
-  }))
+  const formattedPages = allCourses
+    .filter((course) => course.slugAsParams.includes(params.slug[0]))
+    .sort((a, b) => a.index.localeCompare(b.index))
+    .map((course) => ({
+      ...course,
+      slug: course.slug.replace(/^\/courses/, ''),
+    }))
 
   return (
     <Shell as="main" variant="sidebar">

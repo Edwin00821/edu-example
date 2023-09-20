@@ -28,6 +28,10 @@ export const Courses = defineDocumentType(() => ({
     description: {
       type: 'string',
     },
+    index: {
+      type: 'string',
+      required: true,
+    },
     date: {
       type: 'date',
       default: new Date().toLocaleDateString('en-US'),

@@ -31,6 +31,7 @@ export type MainNavItem = NavItemWithOptionalChildren
 
 export type SidebarNavItem = {
   title: string
+  index?: string
   disabled?: boolean
   external?: boolean
   icon?: keyof typeof Icons
@@ -61,16 +62,7 @@ export type SiteConfig = {
 }
 
 export type CoursesConfig = {
-  sidebarNav: SidebarNavItem[]
-}
-
-export type DocsConfig = {
-  mainNav: MainNavItem[]
-  sidebarNav: SidebarNavItem[]
-}
-
-export type MarketingConfig = {
-  mainNav: MainNavItem[]
+  items: SidebarNavItem[]
 }
 
 export type DashboardConfig = {

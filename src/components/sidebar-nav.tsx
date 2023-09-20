@@ -13,8 +13,6 @@ export interface DocsSidebarNavProps {
 export function DocsSidebarNav({ items }: DocsSidebarNavProps) {
   const pathname = usePathname()
 
-  console.log(items)
-
   return items.length ? (
     <div className="w-full">
       {items.map((item, index) => (
@@ -61,7 +59,7 @@ export function DocsSidebarNavItems({
         ) : (
           <span
             key={index}
-            className="flex w-full cursor-not-allowed items-center rounded-md p-2 opacity-60"
+            className="flex w-full cursor-not-allowed items-center rounded-md p-2 font-bold opacity-60"
           >
             {item.title}
           </span>

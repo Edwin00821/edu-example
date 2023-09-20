@@ -182,3 +182,18 @@ export const TOPICS: Topics[] = [
   //   subtopics: [{ title: '', description: '' }],
   // },
 ]
+
+// TOPICS.forEach((a) => {
+//   console.log({ title: slugify(a.topic) })
+
+//   a.subtopics.forEach((b) => {
+//     console.log({ title: slugify(b.title) })
+//   })
+// })
+
+/*
+
+trabajando-con-arrays
+accediendo-a-la-estructura-de-datos
+es-hora-de-practicar-operaciones-crud-basicas
+*/
