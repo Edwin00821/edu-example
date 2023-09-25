@@ -5,7 +5,7 @@ import Link from 'next/link'
 import type { MainNavItem } from '@/types'
 
 import { siteConfig } from '@/config/site'
-import { cn } from '@/lib/utils/tailwind.utils'
+import { cn } from '@/lib/utils'
 import {
   NavigationMenu,
   NavigationMenuContent,

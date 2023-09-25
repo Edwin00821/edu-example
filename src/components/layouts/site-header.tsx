@@ -1,44 +1,52 @@
-// import Link from 'next/link'
-import { type User } from 'next-auth'
+import Link from 'next/link'
+import { type SidebarNavItem } from '@/types'
 
-import { dashboardConfig } from '@/config/dashboard'
 import { siteConfig } from '@/config/site'
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-// import { Button, buttonVariants } from '@/components/ui/button'
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuGroup,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuShortcut,
-//   DropdownMenuTrigger,
-// } from '@/components/ui/dropdown-menu'
-// import { CartSheet } from '@/components/checkout/cart-sheet'
-// import { Combobox } from '@/components/combobox'
-// import { Icons } from '@/components/icons'
+import { getAuthSession } from '@/lib/auth'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button, buttonVariants } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { CoursesCombobox } from '@/components/courses-combobox'
+import { Icons } from '@/components/icons'
 import { MainNav } from '@/components/layouts/main-nav'
 import { MobileNav } from '@/components/layouts/mobile-nav'
+import { ThemeToggle } from '@/components/layouts/theme-toggle'
 
 interface SiteHeaderProps {
-  user?: User | null
+  sidebarNav?: SidebarNavItem[]
 }
 
-export function SiteHeader({ user }: SiteHeaderProps) {
+export const SiteHeader = async ({ sidebarNav }: SiteHeaderProps) => {
+  const sesion = await getAuthSession()
+  const user = sesion?.user
+
+  const initials = user?.name
+    ?.split(' ')
+    .map((name) => name.charAt(0))
+    .join('')
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center">
         <MainNav items={siteConfig.mainNav} />
         <MobileNav
           mainNavItems={siteConfig.mainNav}
-          sidebarNavItems={dashboardConfig.sidebarNav}
+          sidebarNavItems={sidebarNav}
         />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
-            {/* <Combobox /> */}
-            {/* <CartSheet /> */}
-            {/* {user ? (
+            <CoursesCombobox />
+            <ThemeToggle />
+            {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -47,8 +55,8 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
-                        src={user.imageUrl}
-                        alt={user.username ?? ''}
+                        src={user.image ?? ''}
+                        alt={user.name ?? ''}
                       />
                       <AvatarFallback>{initials}</AvatarFallback>
                     </Avatar>
@@ -58,10 +66,10 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {user.firstName} {user.lastName}
+                        {user.name}
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        {email}
+                        {user.email}
                       </p>
                     </div>
                   </DropdownMenuLabel>
@@ -79,7 +87,7 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/dashboard/stores">
-                        <Icons.terminal
+                        <Icons.bash
                           className="mr-2 h-4 w-4"
                           aria-hidden="true"
                         />
@@ -121,7 +129,7 @@ export function SiteHeader({ user }: SiteHeaderProps) {
                 Sign In
                 <span className="sr-only">Sign In</span>
               </Link>
-            )} */}
+            )}
           </nav>
         </div>
       </div>

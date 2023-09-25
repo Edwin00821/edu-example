@@ -1,7 +1,7 @@
 import type { CoursesConfig } from '@/types'
 
 export const coursesConfig: CoursesConfig = {
-  sidebarNav: [
+  items: [
     {
       title: 'Getting Started',
       items: [

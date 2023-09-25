@@ -1,32 +1,12 @@
 import Image from 'next/image'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
-import { cn } from '@/lib/utils/tailwind.utils'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
+import { cn } from '@/lib/utils'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible'
 import { Callout } from '@/components/mdx/callout'
 import { CodeBlock } from '@/components/mdx/code-block'
 import { MdxCard } from '@/components/mdx/mdx-card'
-import {
-  Subtopic,
-  SubtopicDescription,
-  SubtopicMatter,
-  SubtopicTittle,
-  Topic,
-  TopicMatter,
-  TopicTittle,
-} from '@/components/topic-matter'
 
 /** Originally from `shadcn/ui-docs`
  * @link https://github.com/shadcn/ui/blob/main/apps/www/components/mdx-components.tsx
@@ -35,28 +15,10 @@ import {
 // These types are required to make the related components work with `useMDXComponent`
 // They used to work without these types, but now they don't for some reason
 type ImageProps = React.ComponentProps<typeof Image>
-
-type AccordionProps = React.ComponentProps<typeof Accordion>
-type AccordionContentProps = React.ComponentProps<typeof AccordionContent>
-type AccordionItemProps = React.ComponentProps<typeof AccordionItem>
-type AccordionTriggerProps = React.ComponentProps<typeof AccordionTrigger>
-
 type AlertProps = React.ComponentProps<typeof Alert>
 type AlertTitleProps = React.ComponentProps<typeof AlertTitle>
 type AlertDescriptionProps = React.ComponentProps<typeof AlertDescription>
 type AspectRatioProps = React.ComponentProps<typeof AspectRatio>
-
-type CollapsibleProps = React.ComponentProps<typeof Collapsible>
-type CollapsibleContentProps = React.ComponentProps<typeof CollapsibleContent>
-type CollapsibleTriggerProps = React.ComponentProps<typeof CollapsibleTrigger>
-
-type TopicMatterProps = React.ComponentProps<typeof TopicMatter>
-type TopicProps = React.ComponentProps<typeof Topic>
-type TopicTittleProps = React.ComponentProps<typeof TopicTittle>
-type SubtopicMatterProps = React.ComponentProps<typeof SubtopicMatter>
-type SubtopicProps = React.ComponentProps<typeof Subtopic>
-type SubtopicTittleProps = React.ComponentProps<typeof SubtopicTittle>
-type SubtopicDescriptionProps = React.ComponentProps<typeof SubtopicDescription>
 
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -181,6 +143,14 @@ const components = {
     />
   ),
   pre: CodeBlock,
+  // pre: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
+  //   <pre
+  //     className="relative mb-4 mt-6 max-h-[640px] overflow-x-auto rounded-lg border bg-muted p-4 font-mono text-sm font-semibold text-muted-foreground"
+  //     {...props}
+  //   >
+  //     {children}
+  //   </pre>
+  // ),
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
@@ -202,52 +172,9 @@ const components = {
   AlertDescription: ({ className, ...props }: AlertDescriptionProps) => (
     <AlertDescription className={cn(className)} {...props} />
   ),
-  Accordion: ({ className, ...props }: AccordionProps) => (
-    <Accordion className={cn(className)} {...props} />
-  ),
-  AccordionContent: ({ className, ...props }: AccordionContentProps) => (
-    <AccordionContent className={cn(className)} {...props} />
-  ),
-  AccordionItem: ({ className, ...props }: AccordionItemProps) => (
-    <AccordionItem className={cn(className)} {...props} />
-  ),
-  AccordionTrigger: ({ className, ...props }: AccordionTriggerProps) => (
-    <AccordionTrigger className={cn(className)} {...props} />
-  ),
   AspectRatio: ({ className, ...props }: AspectRatioProps) => (
     <AspectRatio className={cn(className)} {...props} />
   ),
-  Collapsible: ({ className, ...props }: CollapsibleProps) => (
-    <Collapsible className={cn(className)} {...props} />
-  ),
-  CollapsibleContent: ({ className, ...props }: CollapsibleContentProps) => (
-    <CollapsibleContent className={cn(className)} {...props} />
-  ),
-  CollapsibleTrigger: ({ className, ...props }: CollapsibleTriggerProps) => (
-    <CollapsibleTrigger className={cn(className)} {...props} />
-  ),
-
-  TopicMatter: ({ className, ...props }: TopicMatterProps) => (
-    <TopicMatter className={cn(className)} {...props} />
-  ),
-
-  Topic: ({ className, ...props }: TopicProps) => (
-    <Topic className={cn(className)} {...props} />
-  ),
-  TopicTittle: ({ className, ...props }: TopicTittleProps) => (
-    <TopicTittle className={cn(className)} {...props} />
-  ),
-  SubtopicMatter: ({ ...props }: SubtopicMatterProps) => (
-    <SubtopicMatter {...props} />
-  ),
-  Subtopic: ({ ...props }: SubtopicProps) => <Subtopic {...props} />,
-  SubtopicTittle: ({ className, ...props }: SubtopicTittleProps) => (
-    <SubtopicTittle className={cn(className)} {...props} />
-  ),
-  SubtopicDescription: ({ className, ...props }: SubtopicDescriptionProps) => (
-    <SubtopicDescription className={cn(className)} {...props} />
-  ),
-
   Card: MdxCard,
   Callout,
 }

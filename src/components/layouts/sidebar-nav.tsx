@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
+import type { SidebarNavItem } from '@/types'
 
-import type { SidebarNavItem } from '@/types/typings'
-import { cn } from '@/lib/utils/tailwind.utils'
+import { cn } from '@/lib/utils'
 import { Icons } from '@/components/icons'
 
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {

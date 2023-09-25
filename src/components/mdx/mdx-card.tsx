@@ -4,7 +4,7 @@
 
 import Link from 'next/link'
 
-import { cn } from '@/lib/utils/tailwind.utils'
+import { cn } from '@/lib/utils'
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   href?: string

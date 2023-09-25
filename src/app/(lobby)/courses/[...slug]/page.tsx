@@ -93,7 +93,6 @@ export async function generateStaticParams(): Promise<
 
 export default async function CoursePage({ params }: CoursePageProps) {
   const course = await getCourseFromParams(params)
-  console.log(params)
 
   if (!course) {
     notFound()
@@ -102,18 +101,14 @@ export default async function CoursePage({ params }: CoursePageProps) {
   const toc = await getTableOfContents(course.body.raw)
 
   // Remove the /course prefix from the slug
-  const formattedPage = {
-    ...course,
-    slug: course.slug.replace(/^\/courses/, ''),
-  }
 
   const formattedPages = allCourses
-    .filter((course) => course.slugAsParams.includes(params.slug[0]))
+    .filter(
+      (course) =>
+        course.slugAsParams.includes(params.slug[0]) &&
+        course.slugAsParams.split('/').length !== 2
+    )
     .sort((a, b) => a.index.localeCompare(b.index))
-    .map((course) => ({
-      ...course,
-      slug: course.slug.replace(/^\/courses/, ''),
-    }))
 
   return (
     <Shell as="main" variant="sidebar">
@@ -124,11 +119,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
         </PageHeader>
         <Separator className="my-4" />
         <Mdx code={course.body.code} />
-        <MdxPager
-          currentItem={formattedPage}
-          allItems={formattedPages}
-          className="my-4"
-        />
+        <Separator className="my-4" />
+        <MdxPager currentItem={course} allItems={formattedPages} />
       </div>
 
       <div className="hidden text-sm xl:block">

@@ -1,8 +1,8 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
+import { visit } from 'unist-util-visit'
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -14,10 +14,20 @@ const computedFields = {
     type: 'string',
     resolve: (doc) => doc._raw.flattenedPath.split('/').slice(1).join('/'),
   },
+  readingTime: {
+    type: 'number',
+    resolve: (doc) => {
+      const content = doc.body.raw
+      const wordsPerMinute = 200
+      const numberOfWords = content.split(/\s/g).length
+      const minutes = numberOfWords / wordsPerMinute
+      return Math.ceil(minutes)
+    },
+  },
 }
 
-export const Courses = defineDocumentType(() => ({
-  name: 'Courses',
+export const Course = defineDocumentType(() => ({
+  name: 'Course',
   filePathPattern: `courses/**/*.mdx`,
   contentType: 'mdx',
   fields: {
@@ -34,10 +44,15 @@ export const Courses = defineDocumentType(() => ({
     },
     date: {
       type: 'date',
-      default: new Date().toLocaleDateString('en-US'),
+      // required: true,
+    },
+    published: {
+      type: 'boolean',
+      default: true,
     },
     image: {
       type: 'string',
+      // required: true,
     },
     authors: {
       // Reference types are not embedded.
@@ -46,10 +61,7 @@ export const Courses = defineDocumentType(() => ({
       // of: Author,
       type: 'list',
       of: { type: 'string' },
-    },
-    published: {
-      type: 'boolean',
-      default: true,
+      required: true,
     },
   },
   computedFields,
@@ -97,15 +109,29 @@ export const Page = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: './src/content',
-  documentTypes: [Page, Courses, Author],
+  documentTypes: [Course, Author, Page],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
+      () => (tree) => {
+        visit(tree, (node) => {
+          if (node?.type === 'element' && node?.tagName === 'pre') {
+            const [codeEl] = node.children
+            if (codeEl.tagName !== 'code') return
+
+            node.raw = codeEl.children?.[0].value
+          }
+        })
+      },
       [
         rehypePrettyCode,
         {
-          theme: 'github-dark',
+          theme: { dark: 'one-dark-pro', light: 'github-light' },
+
+          /**
+           * @param {{ children: string | any[]; }} node
+           */
           onVisitLine(node) {
             // Prevent lines from collapsing in `display: grid` mode, and allow empty
             // lines to be copy/pasted
@@ -113,23 +139,33 @@ export default makeSource({
               node.children = [{ type: 'text', value: ' ' }]
             }
           },
+          /**
+           * @param {{ properties: { className: string[]; }; }} node
+           */
           onVisitHighlightedLine(node) {
-            node.properties.className?.push('line--highlighted')
+            node.properties.className.push('line--highlighted')
           },
+          /**
+           * @param {{ properties: { className: string[]; }; }} node
+           */
           onVisitHighlightedWord(node) {
             node.properties.className = ['word--highlighted']
           },
         },
       ],
-      [
-        rehypeAutolinkHeadings,
-        {
-          properties: {
-            className: ['subheading-anchor'],
-            ariaLabel: 'Link to section',
-          },
-        },
-      ],
+      () => (tree) => {
+        visit(tree, (node) => {
+          if (node?.type === 'element' && node?.tagName === 'div') {
+            if (!('data-rehype-pretty-code-fragment' in node.properties)) return
+
+            for (const child of node.children) {
+              if (child.tagName === 'pre') {
+                child.properties['raw'] = node.raw
+              }
+            }
+          }
+        })
+      },
     ],
   },
 })

@@ -1,17 +1,19 @@
 import { type FC } from 'react'
 import { type CoursesConfig } from '@/types'
-import { allCourses, type Courses } from 'contentlayer/generated'
+import { allCourses, type Course } from 'contentlayer/generated'
 
+import { SiteFooter } from '@/components/layouts/site-footer'
+import { SiteHeader } from '@/components/layouts/site-header'
 import { DocsSidebarNav } from '@/components/sidebar-nav'
 
-interface SlugLayoutProps {
+interface CoursesLayoutProps {
   children: React.ReactNode
   params: {
     slug: string[]
   }
 }
 
-const SlugLayout: FC<SlugLayoutProps> = ({ children, params }) => {
+const CoursesLayout: FC<CoursesLayoutProps> = ({ children, params }) => {
   const param = params?.slug[0] ?? ''
 
   const courses = allCourses
@@ -23,7 +25,7 @@ const SlugLayout: FC<SlugLayoutProps> = ({ children, params }) => {
     })
     .sort((a, b) => a.index.localeCompare(b.index))
 
-  const buildTree = (course: Courses[]): CoursesConfig => {
+  const buildTree = (course: Course[]): CoursesConfig => {
     const tree: CoursesConfig = {
       items: [],
     }
@@ -63,17 +65,21 @@ const SlugLayout: FC<SlugLayoutProps> = ({ children, params }) => {
   const coursesSidebarNav = buildTree(courses)
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="container flex-1">
-        <div className="flex-1 md:grid md:grid-cols-[220px_1fr] md:gap-6 lg:grid-cols-[240px_1fr] lg:gap-10">
-          <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r py-6 pr-2 md:sticky md:block lg:py-10">
-            <DocsSidebarNav items={coursesSidebarNav.items} />
-          </aside>
-          {children}
+    <div className="relative flex min-h-screen flex-col">
+      <SiteHeader sidebarNav={coursesSidebarNav.items} />
+      <main className="flex min-h-screen flex-col">
+        <div className="container flex-1">
+          <div className="flex-1  lg:grid-cols-[240px_1fr] lg:gap-10">
+            <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r py-6 pr-2 lg:sticky lg:block lg:py-10">
+              <DocsSidebarNav items={coursesSidebarNav.items} />
+            </aside>
+            {children}
+          </div>
         </div>
-      </div>
+      </main>
+      <SiteFooter />
     </div>
   )
 }
 
-export default SlugLayout
+export default CoursesLayout

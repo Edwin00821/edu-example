@@ -3,10 +3,10 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
+import type { MainNavItem, SidebarNavItem } from '@/types'
 
-import type { MainNavItem, SidebarNavItem } from '@/types/typings'
 import { siteConfig } from '@/config/site'
-import { cn } from '@/lib/utils/tailwind.utils'
+import { cn } from '@/lib/utils'
 import {
   Accordion,
   AccordionContent,
@@ -19,29 +19,15 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Icons } from '@/components/icons'
 
 interface MobileNavProps {
-  mainNavItems?: MainNavItem[]
-  sidebarNavItems: SidebarNavItem[]
+  mainNavItems: MainNavItem[]
+  sidebarNavItems?: SidebarNavItem[]
 }
 
 export function MobileNav({ mainNavItems, sidebarNavItems }: MobileNavProps) {
   const segment = useSelectedLayoutSegment()
   const [isOpen, setIsOpen] = React.useState(false)
 
-  const navItems = React.useMemo(() => {
-    const items = mainNavItems ?? []
-    const myAccountItem = {
-      title: 'My Account',
-      items: sidebarNavItems,
-    }
-    const myAccountIndex = items.findIndex(
-      (item) => item.title === 'My Account'
-    )
-    if (myAccountIndex !== -1) {
-      items.splice(myAccountIndex, 1)
-    }
-    items.splice(1, 0, myAccountItem)
-    return items
-  }, [mainNavItems, sidebarNavItems])
+  const navItems = mainNavItems?.toSpliced(1, 0, ...(sidebarNavItems ?? []))
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -70,7 +56,7 @@ export function MobileNav({ mainNavItems, sidebarNavItems }: MobileNavProps) {
           <div className="pl-1 pr-7">
             <Accordion
               type="multiple"
-              defaultValue={navItems.map((item) => item.title)}
+              // defaultValue={navItems.map((item) => item.title)}
               className="w-full"
             >
               {navItems?.map((item, index) => (
