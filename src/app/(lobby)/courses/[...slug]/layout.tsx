@@ -69,7 +69,7 @@ const CoursesLayout: FC<CoursesLayoutProps> = ({ children, params }) => {
       <SiteHeader sidebarNav={coursesSidebarNav.items} />
       <main className="flex min-h-screen flex-col">
         <div className="container flex-1">
-          <div className="flex-1  lg:grid-cols-[240px_1fr] lg:gap-10">
+          <div className="flex-1 lg:grid lg:grid-cols-[240px_1fr] lg:gap-10">
             <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r py-6 pr-2 lg:sticky lg:block lg:py-10">
               <DocsSidebarNav items={coursesSidebarNav.items} />
             </aside>
